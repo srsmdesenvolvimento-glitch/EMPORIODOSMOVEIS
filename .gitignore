@@ -1,0 +1,23 @@
+node_modules
+dist
+.env
+.env.local
+.env.*.local
+tools/out
+
+# Catálogo do fornecedor: 100 MB, não é código.
+*.pdf
+
+# Supabase CLI: aponta para a máquina de quem rodou o `link`.
+supabase/.temp
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Scripts soltos de verificação (o teste de acessibilidade de verdade
+# mora em app/scripts/acessibilidade.mjs).
+app/.axe-tmp.mjs
+
+.DS_Store
+Thumbs.db

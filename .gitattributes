@@ -1,0 +1,22 @@
+# O projeto é editado no Windows e publicado em Linux (Vercel/Supabase).
+# Sem isto o Git avisa a cada arquivo e o diff aparece inteiro trocado só
+# por causa do fim de linha.
+* text=auto eol=lf
+
+# Binários: nunca normalizar.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp  binary
+*.avif  binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.pdf  binary
+
+# Estes exigem CRLF no Windows para funcionar.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# O lockfile é gerado; sai do diff de revisão e do gráfico de linguagens.
+pnpm-lock.yaml linguist-generated=true
