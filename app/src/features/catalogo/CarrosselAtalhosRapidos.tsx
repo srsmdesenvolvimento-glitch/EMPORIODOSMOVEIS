@@ -92,9 +92,9 @@ export function CarrosselAtalhosRapidos() {
                   {item.badge && (
                     <span
                       className={cn(
-                        "absolute -top-1 rounded-full px-1.5 py-0.2 text-[0.55rem] font-extrabold uppercase tracking-tight shadow-carta",
+                        "absolute -top-1.5 left-1/2 -translate-x-1/2 z-10 whitespace-nowrap rounded-full px-2 py-0.5 text-[0.6rem] font-black uppercase tracking-wider shadow-sm",
                         item.destaque
-                          ? "bg-tinta-950 text-marca-500"
+                          ? "bg-tinta-950 text-marca-400 ring-1 ring-marca-500/40"
                           : "bg-erro text-tinta-0",
                       )}
                     >

@@ -20,7 +20,6 @@ import { CarrosselAtalhosRapidos } from "@/features/catalogo/CarrosselAtalhosRap
 import { CartaoProduto, EsqueletoCartao } from "@/features/catalogo/CartaoProduto";
 import { VistosRecentemente } from "@/features/favoritos/VistosRecentemente";
 import { SecaoPromissoria } from "@/features/promissoria/SecaoPromissoria";
-import { Foto } from "@/shared/components/Foto";
 import { classesBotao } from "@/shared/components/ui";
 import { AMBIENTES } from "@/shared/lib/ambientes";
 import { useSeo } from "@/shared/lib/seo";
@@ -218,11 +217,33 @@ function ControleVitrine({
   );
 }
 
+const AMBIENTES_HERO = [
+  {
+    nome: "Sala de Estar",
+    chamada: "Sofás, racks e mesas de centro",
+    imagem: "/ambientes/sala.jpg",
+    link: "/catalogo?ambiente=sala",
+    tag: "Coleção Sala 2026",
+  },
+  {
+    nome: "Sala de Jantar",
+    chamada: "Mesas e cadeiras com design contemporâneo",
+    imagem: "/ambientes/jantar.jpg",
+    link: "/catalogo?ambiente=jantar",
+    tag: "Mais Vendidos",
+  },
+  {
+    nome: "Quarto & Suíte",
+    chamada: "Camas, cabeceiras e roupeiros",
+    imagem: "/ambientes/quarto.jpg",
+    link: "/catalogo?ambiente=quarto",
+    tag: "Conforto & Sofisticação",
+  },
+];
+
 /** Capa da casa: aparece quando não há banner cadastrado no painel. */
 function VitrinePadrao() {
   const config = useConfigSite();
-  const vitrine = useVitrine("destaques", 4);
-  const fotos = (vitrine.data ?? []).filter((p) => p.imagem_url).slice(0, 3);
 
   return (
     <section className="relative overflow-hidden bg-tinta-950 text-tinta-0" data-escuro>
@@ -266,42 +287,44 @@ function VitrinePadrao() {
           </div>
         </div>
 
-        {/* Mosaico com móveis de verdade do catálogo: é o produto que vende. */}
+        {/* Mosaico com ambientes realistas de altíssima definição: a primeira visão do site */}
         <div className="relative hidden lg:block">
-          {fotos.length >= 3 ? (
-            <div className="grid grid-cols-2 grid-rows-2 gap-3">
-              {fotos.map((p, i) => (
-                <Link
-                  key={p.id}
-                  to={`/produto/${p.slug}`}
+          <div className="grid grid-cols-2 grid-rows-2 gap-3.5">
+            {AMBIENTES_HERO.map((item, i) => (
+              <Link
+                key={item.nome}
+                to={item.link}
+                className={cn(
+                  "group relative overflow-hidden rounded-3xl bg-tinta-900 shadow-2xl transition-all duration-300 hover:shadow-marca-500/20",
+                  i === 0 && "row-span-2",
+                )}
+              >
+                <img
+                  src={item.imagem}
+                  alt={item.nome}
+                  width={420}
+                  height={i === 0 ? 560 : 270}
+                  fetchPriority={i === 0 ? "high" : "auto"}
                   className={cn(
-                    "group overflow-hidden rounded-3xl bg-tinta-0",
-                    i === 0 && "row-span-2",
+                    "w-full object-cover transition-transform duration-700 ease-saida group-hover:scale-105 motion-reduce:transform-none",
+                    i === 0 ? "h-[27rem]" : "h-[13rem]",
                   )}
-                >
-                  <Foto
-                    src={p.imagem_url}
-                    alt={p.nome}
-                    width={420}
-                    height={i === 0 ? 520 : 250}
-                    fetchPriority={i === 0 ? "high" : "auto"}
-                    className={cn(
-                      "w-full object-cover transition-transform duration-500 ease-saida group-hover:scale-[1.04] motion-reduce:transform-none",
-                      i === 0 ? "h-[26rem]" : "h-[12.6rem]",
-                    )}
-                  />
-                </Link>
-              ))}
-            </div>
-          ) : (
-            <img
-              src="/logo.png"
-              alt=""
-              width={420}
-              height={420}
-              className="mx-auto size-[21rem] object-contain"
-            />
-          )}
+                />
+                <span className="absolute inset-0 bg-gradient-to-t from-tinta-950/90 via-tinta-950/20 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5 flex flex-col justify-end">
+                  <span className="w-fit rounded-full bg-tinta-950/80 backdrop-blur-sm px-2.5 py-0.5 text-2xs font-bold uppercase tracking-wider text-marca-400 ring-1 ring-marca-500/30 mb-1.5">
+                    {item.tag}
+                  </span>
+                  <p className="titulo text-xl sm:text-2xl text-tinta-0 group-hover:text-marca-400 transition-colors">
+                    {item.nome}
+                  </p>
+                  <p className="text-2xs text-tinta-300 line-clamp-1">
+                    {item.chamada}
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -375,6 +398,14 @@ function Garantias() {
 
 /* ----------------------------------------------------------- ambientes */
 
+const CAPAS_AMBIENTES: Record<string, string> = {
+  sala: "/ambientes/sala.jpg",
+  quarto: "/ambientes/quarto.jpg",
+  cozinha: "/ambientes/cozinha.jpg",
+  jantar: "/ambientes/jantar.jpg",
+  escritorio: "/ambientes/escritorio.jpg",
+};
+
 /**
  * Navegação por cômodo, como nas grandes redes: o cliente pensa "preciso de
  * algo para o quarto", não "preciso de um item da linha Cômodas".
@@ -386,9 +417,9 @@ function AmbientesEmDestaque() {
     return {
       ...a,
       total: doAmbiente.length,
-      capa: doAmbiente.find((c) => c.imagem_url)?.imagem_url ?? null,
+      capa: CAPAS_AMBIENTES[a.slug] ?? doAmbiente.find((c) => c.imagem_url)?.imagem_url ?? null,
     };
-  }).filter((a) => a.total > 0);
+  }).filter((a) => a.total > 0 || CAPAS_AMBIENTES[a.slug]);
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-12 lg:px-6">
@@ -414,15 +445,15 @@ function AmbientesEmDestaque() {
               <li key={a.slug} className={cn(i === 0 && "col-span-2 sm:col-span-1")}>
                 <Link
                   to={`/catalogo?ambiente=${a.slug}`}
-                  className="group relative block aspect-[4/3] overflow-hidden rounded-3xl bg-tinta-900"
+                  className="group relative block aspect-[4/3] overflow-hidden rounded-3xl bg-tinta-900 shadow-carta transition-all duration-300 hover:shadow-flutuante"
                 >
-                  <Foto
-                    src={a.capa}
-                    alt=""
+                  <img
+                    src={a.capa ?? "/logo.png"}
+                    alt={a.nome}
                     width={480}
                     height={360}
                     loading="lazy"
-                    className="size-full object-cover opacity-90 transition-transform duration-500 ease-saida group-hover:scale-105 motion-reduce:transform-none"
+                    className="size-full object-cover opacity-90 transition-transform duration-700 ease-saida group-hover:scale-105 motion-reduce:transform-none"
                   />
                   <span className="absolute inset-0 bg-gradient-to-t from-tinta-950/85 via-tinta-950/20 to-transparent" />
                   <span className="absolute inset-x-0 bottom-0 grid gap-0.5 p-4 text-tinta-0 sm:p-5">
