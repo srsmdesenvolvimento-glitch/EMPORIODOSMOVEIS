@@ -6,7 +6,6 @@ import {
   PASSOS_PROMISSORIA,
   PERGUNTAS_PROMISSORIA,
 } from "@/features/promissoria/conteudo";
-import { SimuladorPromissoria } from "@/features/promissoria/SimuladorPromissoria";
 import { classesBotao } from "@/shared/components/ui";
 import { trilhaEstruturada, useSeo } from "@/shared/lib/seo";
 import { linkWhatsApp, useConfigSite } from "@/shared/lib/site";
@@ -80,11 +79,6 @@ export default function Promissoria() {
             </Link>
           </div>
         </div>
-      </section>
-
-      {/* Simulador Interativo */}
-      <section className="mx-auto max-w-5xl px-4 py-8 lg:px-6">
-        <SimuladorPromissoria />
       </section>
 
       <section className="mx-auto max-w-5xl px-4 py-8 lg:px-6">

@@ -20,7 +20,6 @@ import { CarrosselAtalhosRapidos } from "@/features/catalogo/CarrosselAtalhosRap
 import { CartaoProduto, EsqueletoCartao } from "@/features/catalogo/CartaoProduto";
 import { VistosRecentemente } from "@/features/favoritos/VistosRecentemente";
 import { SecaoPromissoria } from "@/features/promissoria/SecaoPromissoria";
-import { SimuladorPromissoria } from "@/features/promissoria/SimuladorPromissoria";
 import { Foto } from "@/shared/components/Foto";
 import { classesBotao } from "@/shared/components/ui";
 import { AMBIENTES } from "@/shared/lib/ambientes";
@@ -66,13 +65,6 @@ export default function Home() {
       <Vitrine />
       <Garantias />
       <AmbientesEmDestaque />
-      
-      {/* Seção de Simulação da Promissória: O grande diferencial da loja */}
-      {config.promissoria_ativa ? (
-        <section aria-label="Simulador de Promissória" className="mx-auto max-w-7xl px-4 py-8 lg:px-6">
-          <SimuladorPromissoria />
-        </section>
-      ) : null}
 
       <VistosRecentemente />
       <Prateleira

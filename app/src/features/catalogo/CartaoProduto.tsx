@@ -1,4 +1,4 @@
-import { FileSignature, Palette, Plus } from "lucide-react";
+import { Palette, Plus } from "lucide-react";
 import { memo, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
@@ -8,7 +8,6 @@ import { useOrcamento } from "@/features/orcamento/store";
 import { Foto } from "@/shared/components/Foto";
 import { Esqueleto, Selo } from "@/shared/components/ui";
 import type { ProdutoCartao } from "@/shared/lib/esquemas";
-import { useConfigSite } from "@/shared/lib/site";
 import { cn, dimensoesEmTexto } from "@/shared/lib/utils";
 
 interface Props {
@@ -34,7 +33,6 @@ export const CartaoProduto = memo(function CartaoProduto({
   const adicionar = useOrcamento((e) => e.adicionar);
   const abrirLista = useOrcamento((e) => e.abrir);
   const medidas = dimensoesEmTexto(produto);
-  const aceitaPromissoria = useConfigSite().promissoria_ativa;
 
   // A foto do cartão: a de capa, a do acabamento em foco, ou a segunda foto
   // enquanto o mouse está sobre a imagem.
@@ -185,12 +183,6 @@ export const CartaoProduto = memo(function CartaoProduto({
           <p className="text-xs font-bold text-texto sm:text-sm">Preço sob consulta</p>
           <span className="text-[0.65rem] font-semibold text-sucesso">Pronta entrega</span>
         </div>
-        {aceitaPromissoria ? (
-          <div className="flex items-center gap-1.5 rounded-xl bg-marca-500/15 px-2 py-1 text-2xs font-bold text-tinta-950 ring-1 ring-marca-500/30">
-            <FileSignature aria-hidden className="size-3.5 shrink-0 text-marca-800" />
-            <span className="truncate">Até 12x na Promissória · Sem Cartão</span>
-          </div>
-        ) : null}
       </div>
 
       {/* Camada do tamanho exato da foto (quadrada): os botões ficam nos cantos

@@ -23,7 +23,6 @@ import { BotaoFavorito } from "@/features/favoritos/BotaoFavorito";
 import { useVistos } from "@/features/favoritos/store";
 import { VistosRecentemente } from "@/features/favoritos/VistosRecentemente";
 import { useOrcamento } from "@/features/orcamento/store";
-import { SimuladorPromissoria } from "@/features/promissoria/SimuladorPromissoria";
 import {
   Botao,
   classesBotao,
@@ -529,13 +528,6 @@ export default function Produto() {
           ) : null}
         </section>
       </div>
-
-      {/* Simulador de Promissória exclusivo para este móvel */}
-      {config.promissoria_ativa ? (
-        <section aria-label="Simular na Promissória" className="mt-12">
-          <SimuladorPromissoria nomeProduto={produto.nome} />
-        </section>
-      ) : null}
 
       {relacionados.data && relacionados.data.length > 0 ? (
         <section className="mt-14">
