@@ -180,13 +180,16 @@ export const CartaoProduto = memo(function CartaoProduto({
         ) : null}
       </div>
 
-      <div className="pointer-events-none mt-auto grid gap-0.5 px-3 pb-3 pt-1.5">
-        <p className="text-sm font-semibold text-texto">Preço sob consulta</p>
+      <div className="pointer-events-none mt-auto grid gap-1 px-3 pb-3 pt-1.5">
+        <div className="flex items-center justify-between">
+          <p className="text-xs font-bold text-texto sm:text-sm">Preço sob consulta</p>
+          <span className="text-[0.65rem] font-semibold text-sucesso">Pronta entrega</span>
+        </div>
         {aceitaPromissoria ? (
-          <p className="flex items-center gap-1 text-xs font-medium text-marca-800">
-            <FileSignature aria-hidden className="size-3.5 shrink-0" />
-            Aceita promissória
-          </p>
+          <div className="flex items-center gap-1.5 rounded-xl bg-marca-500/15 px-2 py-1 text-2xs font-bold text-tinta-950 ring-1 ring-marca-500/30">
+            <FileSignature aria-hidden className="size-3.5 shrink-0 text-marca-800" />
+            <span className="truncate">Até 12x na Promissória · Sem Cartão</span>
+          </div>
         ) : null}
       </div>
 

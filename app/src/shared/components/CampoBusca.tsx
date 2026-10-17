@@ -123,7 +123,7 @@ export function CampoBusca({ id, placeholder }: { id: string; placeholder: strin
         aria-autocomplete="list"
         aria-expanded={mostrarVazio || mostrarResultados}
         aria-controls={idPainel}
-        className="min-h-11 w-full rounded-xl border-0 bg-tinta-0 px-4 pr-20 text-[16px] text-texto shadow-carta placeholder:text-texto-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-tinta-950 sm:text-sm"
+        className="min-h-11 w-full rounded-xl border-0 bg-tinta-0 px-4 pr-24 text-[16px] text-texto shadow-carta placeholder:text-texto-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-tinta-950 sm:text-sm"
       />
       {termo ? (
         <button
@@ -133,7 +133,7 @@ export function CampoBusca({ id, placeholder }: { id: string; placeholder: strin
             setAberto(true);
           }}
           aria-label="Limpar busca"
-          className="absolute right-10 top-1/2 grid size-9 -translate-y-1/2 place-items-center rounded-md text-texto-3 hover:text-texto"
+          className="absolute right-11 top-1/2 grid size-11 -translate-y-1/2 place-items-center rounded-lg text-texto-3 hover:text-texto"
         >
           <X aria-hidden className="size-4" />
         </button>
@@ -141,7 +141,7 @@ export function CampoBusca({ id, placeholder }: { id: string; placeholder: strin
       <button
         type="submit"
         aria-label="Buscar"
-        className="absolute right-1 top-1/2 grid size-9 -translate-y-1/2 place-items-center rounded-lg text-texto-2 transition-colors hover:bg-tinta-100"
+        className="absolute right-0.5 top-1/2 grid size-11 -translate-y-1/2 place-items-center rounded-lg text-texto-2 transition-colors hover:bg-tinta-100"
       >
         <Search aria-hidden className="size-5" />
       </button>
@@ -256,7 +256,7 @@ function Ficha({ aoClicar, children }: { aoClicar: () => void; children: React.R
       type="button"
       onClick={aoClicar}
       className={cn(
-        "min-h-9 rounded-full border border-borda-forte bg-superficie px-3 text-sm text-texto transition-colors hover:bg-tinta-50",
+        "min-h-11 rounded-full border border-borda-forte bg-superficie px-3.5 text-sm text-texto transition-colors hover:bg-tinta-50",
       )}
     >
       {children}

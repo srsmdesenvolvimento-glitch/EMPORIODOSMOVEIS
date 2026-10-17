@@ -16,9 +16,11 @@ import {
   useCategorias,
   useVitrine,
 } from "@/features/catalogo/api";
+import { CarrosselAtalhosRapidos } from "@/features/catalogo/CarrosselAtalhosRapidos";
 import { CartaoProduto, EsqueletoCartao } from "@/features/catalogo/CartaoProduto";
 import { VistosRecentemente } from "@/features/favoritos/VistosRecentemente";
 import { SecaoPromissoria } from "@/features/promissoria/SecaoPromissoria";
+import { SimuladorPromissoria } from "@/features/promissoria/SimuladorPromissoria";
 import { Foto } from "@/shared/components/Foto";
 import { classesBotao } from "@/shared/components/ui";
 import { AMBIENTES } from "@/shared/lib/ambientes";
@@ -60,9 +62,18 @@ export default function Home() {
 
   return (
     <>
+      <CarrosselAtalhosRapidos />
       <Vitrine />
       <Garantias />
       <AmbientesEmDestaque />
+      
+      {/* Seção de Simulação da Promissória: O grande diferencial da loja */}
+      {config.promissoria_ativa ? (
+        <section aria-label="Simulador de Promissória" className="mx-auto max-w-7xl px-4 py-8 lg:px-6">
+          <SimuladorPromissoria />
+        </section>
+      ) : null}
+
       <VistosRecentemente />
       <Prateleira
         titulo="Ofertas da semana"
@@ -563,7 +574,7 @@ function ChamadaFinal({ whatsapp }: { whatsapp: string }) {
           Gostou de uma peça? A sua condição está a uma mensagem.
         </h2>
         <p className="text-tinta-300">
-          Monte a lista com os móveis que você quer e envie de uma vez. Um consultor
+          Monte a lista com os móveis que você quer e envie de uma vez. Nosso time
           responde com valores, parcelas na promissória e prazo de entrega.
         </p>
         <div className="mt-2 flex flex-wrap justify-center gap-2">
@@ -572,13 +583,13 @@ function ChamadaFinal({ whatsapp }: { whatsapp: string }) {
           </Link>
           {whatsapp ? (
             <a
-              href={linkWhatsApp(whatsapp, "Olá! Vim pelo site e quero falar com um consultor.")}
+              href={linkWhatsApp(whatsapp, "Olá! Vim pelo site e quero falar com nosso time.")}
               target="_blank"
               rel="noreferrer noopener"
               className={classesBotao({ aparencia: "zap", tamanho: "lg" })}
             >
               <MessageCircle aria-hidden className="size-4" />
-              Falar com um consultor
+              Falar com nosso time
             </a>
           ) : null}
         </div>

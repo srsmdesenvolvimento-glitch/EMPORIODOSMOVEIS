@@ -6,6 +6,7 @@ import {
   PASSOS_PROMISSORIA,
   PERGUNTAS_PROMISSORIA,
 } from "@/features/promissoria/conteudo";
+import { SimuladorPromissoria } from "@/features/promissoria/SimuladorPromissoria";
 import { classesBotao } from "@/shared/components/ui";
 import { trilhaEstruturada, useSeo } from "@/shared/lib/seo";
 import { linkWhatsApp, useConfigSite } from "@/shared/lib/site";
@@ -81,7 +82,12 @@ export default function Promissoria() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-5xl px-4 py-12 lg:px-6">
+      {/* Simulador Interativo */}
+      <section className="mx-auto max-w-5xl px-4 py-8 lg:px-6">
+        <SimuladorPromissoria />
+      </section>
+
+      <section className="mx-auto max-w-5xl px-4 py-8 lg:px-6">
         <h2 className="titulo text-3xl text-texto">Como funciona</h2>
         <ol className="mt-6 grid gap-4 sm:grid-cols-3">
           {PASSOS_PROMISSORIA.map((passo, i) => (
@@ -161,7 +167,7 @@ export default function Promissoria() {
               className={classesBotao({ aparencia: "zap", tamanho: "lg" })}
             >
               <MessageCircle aria-hidden className="size-5" />
-              Falar com um consultor
+              Falar com nosso time
             </a>
           </div>
         ) : null}

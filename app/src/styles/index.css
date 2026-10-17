@@ -97,6 +97,15 @@
     border-color: var(--color-borda);
   }
 
+  :root {
+    /* Altura do cabeçalho preso, medida em tempo real pelo Cabecalho.
+       O padrão cobre o primeiro quadro, antes da medição. É o que governa
+       o `top` dos painéis presos (filtro do catálogo, acabamento do móvel)
+       para eles nunca ficarem por baixo da barra. */
+    --altura-cabecalho: 8.5rem;
+    --altura-cabecalho-topo: 0px;
+  }
+
   html {
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
@@ -108,6 +117,43 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    /* O elástico do fim da página arrastava a barra presa junto. */
+    overscroll-behavior-y: none;
+  }
+
+  /* ------------------------------------------------------- toque nativo
+     Três regras que separam "site" de "aplicativo" no celular:
+     1. o flash cinza em cada toque;
+     2. os 300 ms de espera por um possível toque duplo;
+     3. a seleção de texto que nasce de um arrasto no meio de um botão. */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button,
+  a,
+  label,
+  summary,
+  select,
+  [role="button"],
+  [role="tab"],
+  [role="switch"],
+  [role="option"] {
+    touch-action: manipulation;
+  }
+
+  button,
+  [role="button"],
+  [role="tab"],
+  [role="switch"] {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* Onde o gesto é ampliar (a foto em tela cheia), o navegador não deve
+     intervir: quem trata é a própria galeria. */
+  .area-zoom {
+    touch-action: none;
   }
 
   /* Foco visível sempre — requisito de teclado, não enfeite. */
@@ -144,6 +190,34 @@
 }
 
 @layer components {
+  /* Respiro para o polegar e para a barra do sistema (iPhone sem botão,
+     Android por gesto). Sem isto o último botão fica sob o indicador. */
+  .safe-b {
+    padding-bottom: calc(var(--espaco-safe, 1rem) + env(safe-area-inset-bottom, 0px));
+  }
+
+  .safe-bx {
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
+  }
+
+  /* Controle pequeno de desenho, área grande de dedo.
+     O círculo de 6 px da vitrine continua com 6 px na tela, mas o alvo
+     real passa a ter 44 px — o dedo acerta, o olho não percebe. */
+  .alvo-44 {
+    position: relative;
+  }
+
+  .alvo-44::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 44px;
+    height: 44px;
+    transform: translate(-50%, -50%);
+  }
+
   /* Faixa que esconde a barra de rolagem mas continua rolável no toque —
      é o gesto das prateleiras horizontais da home. */
   .trilho-x {

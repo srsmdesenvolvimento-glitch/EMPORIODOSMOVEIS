@@ -17,6 +17,8 @@ import { useFavoritos } from "@/features/favoritos/store";
 import { useOrcamento, useTotalDeItens } from "@/features/orcamento/store";
 import { CampoBusca } from "@/shared/components/CampoBusca";
 import { Foto } from "@/shared/components/Foto";
+import { useAlturaEmVariavel } from "@/shared/hooks/useAlturaEmVariavel";
+import { useDirecaoDaRolagem } from "@/shared/hooks/useDirecaoDaRolagem";
 import { AMBIENTES } from "@/shared/lib/ambientes";
 import type { Categoria } from "@/shared/lib/esquemas";
 import { NOME_DA_MARCA, useConfigSite } from "@/shared/lib/site";
@@ -29,9 +31,13 @@ export function Cabecalho() {
   const totalItens = useTotalDeItens();
   const totalFavoritos = useFavoritos((e) => e.itens.length);
   const abrirOrcamento = useOrcamento((e) => e.abrir);
+  // No celular a barra enxuga ao descer; no computador ela é o menu
+  // principal e fica. Quem decide é o breakpoint, não o JavaScript.
+  const recolhido = useDirecaoDaRolagem();
+  const refCabecalho = useAlturaEmVariavel<HTMLElement>("--altura-cabecalho");
 
   return (
-    <header className="sticky top-0 z-50">
+    <header ref={refCabecalho} className="sticky top-0 z-50">
       {/* Faixa da marca: amarelo da logo com tipografia preta, como no símbolo. */}
       <div className="bg-marca-500">
         <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-2.5 lg:px-6">
@@ -79,6 +85,15 @@ export function Cabecalho() {
                 <Tag aria-hidden className="size-4" />
                 Ofertas
               </Link>
+              {config.promissoria_ativa ? (
+                <Link
+                  to="/promissoria"
+                  className="hidden min-h-11 items-center gap-1.5 rounded-lg px-3 text-sm font-bold text-tinta-950 transition-colors hover:bg-marca-400 sm:inline-flex"
+                >
+                  <FileSignature aria-hidden className="size-4" />
+                  <span>Promissória</span>
+                </Link>
+              ) : null}
               <IconeComContador
                 para="/favoritos"
                 rotulo={
@@ -111,7 +126,11 @@ export function Cabecalho() {
         </div>
       </div>
 
-      <BarraAmbientes categorias={categorias.data ?? []} promissoria={config.promissoria_ativa} />
+      <BarraAmbientes
+        categorias={categorias.data ?? []}
+        promissoria={config.promissoria_ativa}
+        recolhido={recolhido}
+      />
 
       {menuAberto ? (
         <MenuLateral
@@ -167,9 +186,12 @@ function IconeComContador({
 function BarraAmbientes({
   categorias,
   promissoria,
+  recolhido,
 }: {
   categorias: Categoria[];
   promissoria: boolean;
+  /** Celular: a faixa enxuga ao descer a página. No desktop, nunca. */
+  recolhido: boolean;
 }) {
   const [aberto, setAberto] = useState<string | null>(null);
   const espera = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -306,31 +328,48 @@ function BarraAmbientes({
         </div>
       ) : null}
 
-      {/* Atalhos roláveis no celular. */}
-      <nav aria-label="Ambientes" className="trilho-x flex gap-1 px-3 py-1.5 lg:hidden">
-        <NavLink
-          to="/catalogo"
-          end
-          className="inline-flex min-h-9 shrink-0 items-center rounded-full px-3 text-xs font-semibold text-tinta-0"
-        >
-          Tudo
-        </NavLink>
-        {ambientes.map((a) => (
-          <Link
-            key={a.slug}
-            to={`/catalogo?ambiente=${a.slug}`}
-            className="inline-flex min-h-9 shrink-0 items-center whitespace-nowrap rounded-full px-3 text-xs text-tinta-200"
-          >
-            {a.nome}
-          </Link>
-        ))}
-        <Link
-          to="/ofertas"
-          className="inline-flex min-h-9 shrink-0 items-center whitespace-nowrap rounded-full px-3 text-xs text-tinta-200"
-        >
-          Ofertas
-        </Link>
-      </nav>
+      {/* Atalhos roláveis no celular. Enxugam quando a pessoa desce e
+          voltam no primeiro gesto de subir — o cromo não come a tela.
+          O `grid-rows` de 1fr para 0fr é o único jeito de tirar a faixa do
+          fluxo sem animar altura; no computador ele fica travado em 1fr,
+          porque lá esta barra é o menu principal e não pode sumir. */}
+      <div
+        className={cn(
+          "grid transition-[grid-template-rows,opacity] duration-300 ease-saida motion-reduce:transition-none",
+          recolhido ? "grid-rows-[0fr] opacity-0" : "grid-rows-[1fr] opacity-100",
+          "lg:grid-rows-[1fr] lg:opacity-100",
+        )}
+        // Recolhida, a faixa sai também do teclado: sem isso o Tab levaria
+        // o foco para links invisíveis.
+        inert={recolhido}
+      >
+        <div className="min-h-0 overflow-hidden">
+          <nav aria-label="Ambientes" className="trilho-x flex gap-1 px-3 py-1.5 lg:hidden">
+            <NavLink
+              to="/catalogo"
+              end
+              className="inline-flex min-h-11 shrink-0 items-center rounded-full px-3.5 text-xs font-semibold text-tinta-0"
+            >
+              Tudo
+            </NavLink>
+            {ambientes.map((a) => (
+              <Link
+                key={a.slug}
+                to={`/catalogo?ambiente=${a.slug}`}
+                className="inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-full px-3.5 text-xs text-tinta-200"
+              >
+                {a.nome}
+              </Link>
+            ))}
+            <Link
+              to="/ofertas"
+              className="inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-full px-3.5 text-xs text-tinta-200"
+            >
+              Ofertas
+            </Link>
+          </nav>
+        </div>
+      </div>
     </div>
   );
 }

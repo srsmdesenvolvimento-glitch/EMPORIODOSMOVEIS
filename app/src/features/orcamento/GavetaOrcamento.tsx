@@ -1,10 +1,10 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { ClipboardList, Minus, Plus, Send, Trash2, X } from "lucide-react";
+import { ClipboardList, FileSignature, Minus, Plus, Send, Trash2, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
-import { Botao, EstadoVazio } from "@/shared/components/ui";
+import { Botao, classesBotao, EstadoVazio } from "@/shared/components/ui";
 import { supabase } from "@/shared/lib/supabase";
 import {
   linkWhatsApp,
@@ -37,7 +37,7 @@ export function GavetaOrcamento() {
 
   const totalPecas = itens.reduce((s, i) => s + i.quantidade, 0);
 
-  async function enviarPeloWhatsApp() {
+  async function enviarPeloWhatsApp(naPromissoria = false) {
     if (itens.length === 0) return;
     setEnviando(true);
     // Registra o interesse antes de sair do site. Se falhar, o cliente segue
@@ -46,7 +46,7 @@ export function GavetaOrcamento() {
       await supabase.from("orcamentos").insert({
         nome: "Visitante do site",
         telefone: "não informado",
-        origem: "catalogo",
+        origem: naPromissoria ? "promissoria" : "catalogo",
         status: "novo",
         itens: itens.map((i) => ({
           produto_id: i.produto_id,
@@ -58,7 +58,11 @@ export function GavetaOrcamento() {
     } catch {
       // segue o fluxo
     }
-    const url = linkWhatsApp(config.whatsapp, mensagemDeOrcamento(itens));
+    const textoBase = mensagemDeOrcamento(itens);
+    const textoFinal = naPromissoria
+      ? `${textoBase}\n\n*Condição desejada:* Gostaria de parcelar na Nota Promissória (sem cartão de crédito).`
+      : textoBase;
+    const url = linkWhatsApp(config.whatsapp, textoFinal);
     window.open(url, "_blank", "noopener,noreferrer");
     setEnviando(false);
     toast.success("Abrimos o WhatsApp com a sua lista");
@@ -163,7 +167,7 @@ export function GavetaOrcamento() {
                                 mudarQuantidade(item.produto_id, item.cor, item.quantidade - 1)
                               }
                               aria-label={`Diminuir quantidade de ${item.nome}`}
-                              className="grid size-9 place-items-center rounded-l-lg text-texto-2 transition-colors hover:bg-tinta-100"
+                              className="grid size-11 place-items-center rounded-l-lg text-texto-2 transition-colors hover:bg-tinta-100"
                             >
                               <Minus aria-hidden className="size-4" />
                             </button>
@@ -179,7 +183,7 @@ export function GavetaOrcamento() {
                                 mudarQuantidade(item.produto_id, item.cor, item.quantidade + 1)
                               }
                               aria-label={`Aumentar quantidade de ${item.nome}`}
-                              className="grid size-9 place-items-center rounded-r-lg text-texto-2 transition-colors hover:bg-tinta-100"
+                              className="grid size-11 place-items-center rounded-r-lg text-texto-2 transition-colors hover:bg-tinta-100"
                             >
                               <Plus aria-hidden className="size-4" />
                             </button>
@@ -189,7 +193,7 @@ export function GavetaOrcamento() {
                             type="button"
                             onClick={() => remover(item.produto_id, item.cor)}
                             aria-label={`Remover ${item.nome} da lista`}
-                            className="ml-auto grid size-9 place-items-center rounded-lg text-texto-3 transition-colors hover:bg-erro-fraco hover:text-erro"
+                            className="ml-auto grid size-11 place-items-center rounded-lg text-texto-3 transition-colors hover:bg-erro-fraco hover:text-erro"
                           >
                             <Trash2 aria-hidden className="size-4" />
                           </button>
@@ -202,17 +206,33 @@ export function GavetaOrcamento() {
             </div>
 
             {itens.length > 0 ? (
-              <footer className="grid gap-2 border-t border-borda bg-superficie p-4">
+              <footer className="safe-b grid gap-2 border-t border-borda bg-superficie px-4 pt-4">
                 <p className="text-xs text-texto-2">
                   Os preços são negociados peça a peça. Mande a lista e a equipe
                   responde com a melhor condição.
                 </p>
+                {config.promissoria_ativa ? (
+                  <button
+                    type="button"
+                    disabled={enviando}
+                    onClick={() => void enviarPeloWhatsApp(true)}
+                    className={classesBotao({
+                      aparencia: "marca",
+                      tamanho: "lg",
+                      blocao: true,
+                      className: "justify-center font-bold shadow-carta py-3",
+                    })}
+                  >
+                    <FileSignature aria-hidden className="size-4" />
+                    Comprar na Promissória (WhatsApp)
+                  </button>
+                ) : null}
                 <Botao
                   aparencia="zap"
                   tamanho="lg"
                   blocao
                   carregando={enviando}
-                  onClick={enviarPeloWhatsApp}
+                  onClick={() => void enviarPeloWhatsApp(false)}
                 >
                   <Send aria-hidden className="size-4" />
                   Pedir orçamento no WhatsApp

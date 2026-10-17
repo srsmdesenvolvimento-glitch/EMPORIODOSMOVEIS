@@ -23,6 +23,7 @@ import { BotaoFavorito } from "@/features/favoritos/BotaoFavorito";
 import { useVistos } from "@/features/favoritos/store";
 import { VistosRecentemente } from "@/features/favoritos/VistosRecentemente";
 import { useOrcamento } from "@/features/orcamento/store";
+import { SimuladorPromissoria } from "@/features/promissoria/SimuladorPromissoria";
 import {
   Botao,
   classesBotao,
@@ -341,21 +342,42 @@ export default function Produto() {
                 Receba a sua condição para este móvel
               </p>
               <p className="mt-1.5 text-sm leading-relaxed text-texto-2">
-                Um consultor da loja responde com o valor, as formas de pagamento e a
+                Nosso time responde com o valor, as formas de pagamento e a
                 disponibilidade{corAtiva ? ` no acabamento ${corAtiva}` : ""}.
               </p>
             </div>
 
             <div className="grid gap-2">
+              {config.promissoria_ativa && config.whatsapp ? (
+                <a
+                  href={linkPromissoria}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className={classesBotao({
+                    aparencia: "marca",
+                    tamanho: "lg",
+                    blocao: true,
+                    className: "font-bold shadow-carta py-3.5",
+                  })}
+                >
+                  <FileSignature aria-hidden className="size-5" />
+                  Comprar na Promissória (WhatsApp)
+                </a>
+              ) : null}
               {config.whatsapp ? (
                 <a
                   href={linkCondicao}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className={classesBotao({ aparencia: "zap", tamanho: "lg", blocao: true })}
+                  className={classesBotao({
+                    aparencia: "zap",
+                    tamanho: "lg",
+                    blocao: true,
+                    className: "font-semibold py-3",
+                  })}
                 >
                   <MessageCircle aria-hidden className="size-5" />
-                  Solicitar minha condição
+                  Solicitar Condição Geral / À Vista
                 </a>
               ) : null}
               <Botao aparencia="contorno" tamanho="lg" blocao onClick={incluirNaLista}>
@@ -508,6 +530,13 @@ export default function Produto() {
         </section>
       </div>
 
+      {/* Simulador de Promissória exclusivo para este móvel */}
+      {config.promissoria_ativa ? (
+        <section aria-label="Simular na Promissória" className="mt-12">
+          <SimuladorPromissoria nomeProduto={produto.nome} />
+        </section>
+      ) : null}
+
       {relacionados.data && relacionados.data.length > 0 ? (
         <section className="mt-14">
           <h2 className="titulo mb-4 text-2xl text-texto">Combine com este móvel</h2>
@@ -523,38 +552,34 @@ export default function Produto() {
         <VistosRecentemente excluir={produto.id} titulo="Você também viu" />
       </div>
 
-      {/* No celular os botões de compra ficam abaixo da dobra: esta barra os
-          mantém ao alcance do polegar o tempo todo. */}
+      {/* No celular os botões de ação ficam acessíveis ao polegar, logo acima da navegação */}
       <div
-        className="fixed inset-x-0 bottom-0 z-40 flex gap-2 border-t border-borda bg-superficie/95 px-4 pt-3 shadow-suspenso backdrop-blur lg:hidden"
-        style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom, 0px))" }}
+        className="fixed inset-x-0 bottom-16 z-30 flex items-center gap-2 border-t border-borda/80 bg-superficie/95 p-3 shadow-suspenso backdrop-blur-md lg:hidden"
+        style={{ bottom: "calc(4rem + env(safe-area-inset-bottom, 0px))" }}
       >
+        <Botao
+          aparencia="contorno"
+          onClick={incluirNaLista}
+          aria-label="Adicionar à minha lista"
+          className="shrink-0 size-11 p-0 grid place-items-center rounded-xl"
+        >
+          <ClipboardList aria-hidden className="size-5" />
+        </Botao>
         {config.whatsapp ? (
-          <>
-            <Botao
-              aparencia="contorno"
-              onClick={incluirNaLista}
-              aria-label="Adicionar à minha lista"
-              className="shrink-0 px-3"
-            >
-              <ClipboardList aria-hidden className="size-5" />
-            </Botao>
-            <a
-              href={linkCondicao}
-              target="_blank"
-              rel="noreferrer noopener"
-              className={classesBotao({ aparencia: "zap", blocao: true })}
-            >
-              <MessageCircle aria-hidden className="size-4" />
-              Solicitar minha condição
-            </a>
-          </>
-        ) : (
-          <Botao aparencia="marca" blocao onClick={incluirNaLista}>
-            <ClipboardList aria-hidden className="size-4" />
-            Adicionar à minha lista
-          </Botao>
-        )}
+          <a
+            href={linkPromissoria}
+            target="_blank"
+            rel="noreferrer noopener"
+            className={classesBotao({
+              aparencia: "zap",
+              blocao: true,
+              className: "flex-1 justify-center text-center font-bold text-xs sm:text-sm py-2.5",
+            })}
+          >
+            <MessageCircle aria-hidden className="size-4.5" />
+            Quero na Promissória
+          </a>
+        ) : null}
       </div>
     </div>
   );

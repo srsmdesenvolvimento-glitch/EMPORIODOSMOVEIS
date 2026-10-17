@@ -3,6 +3,7 @@ import { Navigate, Outlet, Route, Routes, useLocation } from "react-router-dom";
 
 import { ProvedorSessao } from "@/features/auth/sessao";
 import { GavetaPreguicosa } from "@/features/orcamento/GavetaPreguicosa";
+import { BarraNavegacaoInferior } from "@/shared/components/BarraNavegacaoInferior";
 import { BotaoWhatsApp } from "@/shared/components/BotaoWhatsApp";
 import { Cabecalho } from "@/shared/components/Cabecalho";
 import { FaixaTopo } from "@/shared/components/FaixaTopo";
@@ -10,20 +11,23 @@ import { Rodape } from "@/shared/components/Rodape";
 import { RolarAoTopo } from "@/shared/components/RolarAoTopo";
 import { LimiteDeErro } from "@/shared/components/LimiteDeErro";
 import { Carregando } from "@/shared/components/ui";
+import { usePrefetchDeLinks } from "@/shared/hooks/usePrefetchDeLinks";
 
+import { carregadores } from "@/routes/carregadores";
 import Home from "@/routes/Home";
 
 // O catálogo é a porta de entrada e carrega junto. O painel só chega
 // para quem faz login — não pode pesar no bundle do visitante.
-const Catalogo = lazy(() => import("@/routes/Catalogo"));
-const Produto = lazy(() => import("@/routes/Produto"));
-const Ofertas = lazy(() => import("@/routes/Ofertas"));
-const Categorias = lazy(() => import("@/routes/Categorias"));
-const Sobre = lazy(() => import("@/routes/Sobre"));
-const Contato = lazy(() => import("@/routes/Contato"));
-const Promissoria = lazy(() => import("@/routes/Promissoria"));
-const Favoritos = lazy(() => import("@/routes/Favoritos"));
-const Privacidade = lazy(() => import("@/routes/Privacidade"));
+// As rotas saem todas do mesmo mapa que a pré-busca lê (routes/carregadores).
+const Catalogo = lazy(carregadores.Catalogo);
+const Produto = lazy(carregadores.Produto);
+const Ofertas = lazy(carregadores.Ofertas);
+const Categorias = lazy(carregadores.Categorias);
+const Sobre = lazy(carregadores.Sobre);
+const Contato = lazy(carregadores.Contato);
+const Promissoria = lazy(carregadores.Promissoria);
+const Favoritos = lazy(carregadores.Favoritos);
+const Privacidade = lazy(carregadores.Privacidade);
 const NaoEncontrada = lazy(() => import("@/routes/NaoEncontrada"));
 
 const Entrar = lazy(() => import("@/routes/admin/Entrar"));
@@ -41,7 +45,7 @@ const PainelConfiguracoes = lazy(() => import("@/routes/admin/PainelConfiguracoe
 function LayoutDoSite() {
   const { pathname } = useLocation();
   return (
-    <div className="flex min-h-dvh flex-col">
+    <div className="flex min-h-dvh flex-col pb-16 lg:pb-0">
       <a
         href="#conteudo"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-tinta-950 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-tinta-0"
@@ -68,12 +72,15 @@ function LayoutDoSite() {
       <Rodape />
       <GavetaPreguicosa />
       <BotaoWhatsApp />
+      <BarraNavegacaoInferior />
     </div>
   );
 }
 
 export default function App() {
   const local = useLocation();
+  usePrefetchDeLinks();
+
   return (
     <ProvedorSessao>
       <RolarAoTopo />

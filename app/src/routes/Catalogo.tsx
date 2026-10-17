@@ -158,7 +158,7 @@ export default function Catalogo() {
                 onClick={() => mudarFiltro("categoria", filtros.categoria === c.slug ? null : c.slug)}
                 aria-pressed={filtros.categoria === c.slug}
                 className={cn(
-                  "flex min-h-10 w-full items-center justify-between rounded-lg px-2 text-left text-sm transition-colors",
+                  "flex min-h-11 w-full items-center justify-between rounded-lg px-2 text-left text-sm transition-colors",
                   filtros.categoria === c.slug
                     ? "bg-marca-100 font-semibold text-marca-900"
                     : "text-texto-2 hover:bg-tinta-100",
@@ -258,22 +258,22 @@ export default function Catalogo() {
           {ativos.map((f) => (
             <span
               key={f.rotulo}
-              className="inline-flex items-center gap-1 rounded-full border border-borda-forte bg-superficie py-1 pl-3 pr-1 text-xs text-texto"
+              className="inline-flex min-h-11 items-center gap-1 rounded-full border border-borda-forte bg-superficie pl-3.5 pr-1 text-xs text-texto"
             >
               {f.rotulo}
               <button
                 type="button"
                 onClick={() => mudarFiltros(f.limpar)}
                 aria-label={`Remover filtro ${f.rotulo}`}
-                className="grid size-7 place-items-center rounded-full text-texto-3 transition-colors hover:bg-tinta-100 hover:text-erro"
+                className="alvo-44 grid size-9 place-items-center rounded-full text-texto-3 transition-colors hover:bg-tinta-100 hover:text-erro"
               >
-                <X aria-hidden className="size-3.5" />
+                <X aria-hidden className="size-4" />
               </button>
             </span>
           ))}
           <Link
             to="/catalogo"
-            className="inline-flex min-h-9 items-center text-xs font-medium text-texto-2 underline underline-offset-4 hover:text-erro"
+            className="inline-flex min-h-11 items-center text-xs font-medium text-texto-2 underline underline-offset-4 hover:text-erro"
           >
             Limpar tudo
           </Link>
@@ -443,7 +443,7 @@ function Pilula({
       onClick={aoClicar}
       aria-pressed={ativa}
       className={cn(
-        "inline-flex min-h-10 items-center justify-center gap-1.5 rounded-full border px-3 text-sm transition-colors",
+        "inline-flex min-h-11 items-center justify-center gap-1.5 rounded-full border px-3.5 text-sm transition-colors",
         ativa
           ? "border-tinta-950 bg-tinta-950 font-medium text-tinta-0"
           : "border-borda-forte bg-superficie text-texto hover:bg-tinta-50",

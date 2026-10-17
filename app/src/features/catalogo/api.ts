@@ -2,6 +2,7 @@ import {
   keepPreviousData,
   useInfiniteQuery,
   useQuery,
+  type QueryClient,
 } from "@tanstack/react-query";
 
 import {
@@ -134,31 +135,61 @@ export function useVitrine(tipo: "destaques" | "ofertas" | "novidades", limite =
   });
 }
 
+const TEMPO_PRODUTO = 5 * 60 * 1000;
+
+/**
+ * A consulta do móvel mora aqui, e não dentro do `useProduto`, porque a
+ * pré-busca (o dedo encostando no cartão) precisa exatamente da mesma
+ * consulta — mesmo `queryKey`, mesma função. Duas versões seriam duas
+ * chances de divergir e o cache nunca acertaria.
+ */
+async function buscarProduto(slug: string): Promise<ProdutoCompleto | null> {
+  const { data, error } = await supabase
+    .from("produtos")
+    .select(
+      `*,
+       categorias ( slug, nome ),
+       produto_imagens ( id, url, alt, largura, altura, ordem ),
+       produto_cores ( id, nome, imagem_url, amostra_hex, ordem )`,
+    )
+    .eq("slug", slug)
+    .eq("ativo", true)
+    .maybeSingle();
+  if (error) throw error;
+  if (!data) return null;
+  const produto = esquemaProdutoCompleto.parse(data);
+  produto.produto_imagens.sort((a, b) => a.ordem - b.ordem);
+  produto.produto_cores.sort((a, b) => a.ordem - b.ordem);
+  return produto;
+}
+
 export function useProduto(slug: string | undefined) {
   return useQuery({
     queryKey: chaves.produto(slug ?? ""),
     enabled: Boolean(slug),
-    staleTime: 5 * 60 * 1000,
-    queryFn: async (): Promise<ProdutoCompleto | null> => {
-      const { data, error } = await supabase
-        .from("produtos")
-        .select(
-          `*,
-           categorias ( slug, nome ),
-           produto_imagens ( id, url, alt, largura, altura, ordem ),
-           produto_cores ( id, nome, imagem_url, amostra_hex, ordem )`,
-        )
-        .eq("slug", slug ?? "")
-        .eq("ativo", true)
-        .maybeSingle();
-      if (error) throw error;
-      if (!data) return null;
-      const produto = esquemaProdutoCompleto.parse(data);
-      produto.produto_imagens.sort((a, b) => a.ordem - b.ordem);
-      produto.produto_cores.sort((a, b) => a.ordem - b.ordem);
-      return produto;
-    },
+    staleTime: TEMPO_PRODUTO,
+    queryFn: () => buscarProduto(slug ?? ""),
   });
+}
+
+/**
+ * Deixa a página do móvel pronta antes do toque.
+ *
+ * Num celular são três coisas em série: baixar o pedaço da rota, buscar a
+ * ficha no banco e baixar as fotos. Começando no `pointerdown`, quando o
+ * dedo encosta, o clique já encontra tudo em memória e a página abre sem
+ * tela de carregamento — que é a diferença entre parecer site e parecer
+ * aplicativo. O erro é engolido de propósito: pré-busca que falha não pode
+ * virar erro na cara de quem só passou o dedo.
+ */
+export function prefetchProduto(cliente: QueryClient, slug: string) {
+  void cliente
+    .prefetchQuery({
+      queryKey: chaves.produto(slug),
+      staleTime: TEMPO_PRODUTO,
+      queryFn: () => buscarProduto(slug),
+    })
+    .catch(() => undefined);
 }
 
 /** "Quem viu este, viu também" — mesma categoria, fora o próprio. */
