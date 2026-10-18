@@ -91,7 +91,7 @@ export function Cabecalho() {
                   className="hidden min-h-11 items-center gap-1.5 rounded-lg px-3 text-sm font-bold text-tinta-950 transition-colors hover:bg-marca-400 sm:inline-flex"
                 >
                   <FileSignature aria-hidden className="size-4" />
-                  <span>Promissória</span>
+                  <span>Boleto & Promissória</span>
                 </Link>
               ) : null}
               <IconeComContador
@@ -280,7 +280,7 @@ function BarraAmbientes({
             className="ml-auto inline-flex min-h-11 items-center gap-1.5 px-3 py-3 text-sm font-semibold text-marca-500 transition-opacity hover:opacity-80"
           >
             <FileSignature aria-hidden className="size-4" />
-            Compre na promissória
+            Boleto & Promissória
           </Link>
         ) : null}
       </nav>
@@ -525,7 +525,7 @@ function MenuLateral({
               onClick={aoFechar}
               className="flex min-h-12 items-center px-4 text-sm text-texto hover:bg-tinta-50"
             >
-              A loja
+              Quem somos
             </Link>
             <Link
               to="/contato"

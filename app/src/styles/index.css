@@ -318,6 +318,84 @@
   animation: surgir 0.4s var(--ease-saida) both;
 }
 
+
+/* --- Animações customizadas premium e micro-interações --- */
+@keyframes flutuar {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes pulso-brilho {
+  0%, 100% { opacity: 0.65; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.06); }
+}
+
+@keyframes shimmer-sweep {
+  0% { transform: translateX(-150%); }
+  100% { transform: translateX(250%); }
+}
+
+.animar-flutuar {
+  animation: flutuar 3.8s ease-in-out infinite;
+}
+
+.animar-pulso-brilho {
+  animation: pulso-brilho 2.4s ease-in-out infinite;
+}
+
+.efeito-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.efeito-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  transform: translateX(-150%);
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.efeito-shimmer:hover::after {
+  transform: translateX(250%);
+}
+
+.card-animado {
+  transition: transform 0.28s var(--ease-saida), box-shadow 0.28s var(--ease-saida), border-color 0.28s var(--ease-saida);
+}
+
+.card-animado:hover {
+  transform: translateY(-4px);
+}
+
+
+/* --- Marquee infinito contínuo para depoimentos --- */
+@keyframes marquee-grupo {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - 1.5rem));
+  }
+}
+
+.animar-marquee-grupo {
+  display: flex;
+  gap: 1.5rem;
+  animation: marquee-grupo 38s linear infinite;
+  will-change: transform;
+}
+
+.animar-marquee-container:hover .animar-marquee-grupo,
+.animar-marquee-container:focus-within .animar-marquee-grupo {
+  animation-play-state: paused;
+}
+
 /* Quem pediu menos movimento recebe menos movimento — em tudo. */
 @media (prefers-reduced-motion: reduce) {
   *,

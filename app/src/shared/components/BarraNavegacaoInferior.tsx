@@ -63,7 +63,7 @@ export function BarraNavegacaoInferior() {
           <div className="flex flex-1 flex-col items-center justify-center -translate-y-3">
             <Link
               to="/promissoria"
-              aria-label="Comprar na Promissória sem cartão"
+              aria-label="Comprar no boleto ou na promissória sem cartão"
               className={cn(
                 "relative grid size-13 place-items-center rounded-full bg-marca-500 text-tinta-950 shadow-suspenso transition-transform active:scale-90 hover:scale-105",
                 estaNaPromissoria && "ring-2 ring-tinta-950",
@@ -71,8 +71,8 @@ export function BarraNavegacaoInferior() {
             >
               <FileSignature aria-hidden className="size-6" />
             </Link>
-            <span className="mt-0.5 text-[0.65rem] font-bold text-tinta-950">
-              Promissória
+            <span className="mt-0.5 text-[0.62rem] font-bold text-tinta-950 whitespace-nowrap">
+              Crediário
             </span>
           </div>
         ) : null}

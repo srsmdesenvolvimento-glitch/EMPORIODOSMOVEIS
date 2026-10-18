@@ -70,7 +70,7 @@ export default function Catalogo() {
           ? `Móveis para ${ambienteAtual.toLowerCase()}`
           : "Catálogo de móveis",
     descricao: categoriaAtual
-      ? `${categoriaAtual.nome}: veja todos os modelos com foto, medidas e acabamentos. Compre na promissória, direto com a loja.`
+      ? `${categoriaAtual.nome}: veja todos os modelos com foto, medidas e acabamentos. Compre no boleto ou na promissória sem cartão de crédito com condições exclusivas de fábrica.`
       : "Catálogo completo com mais de 300 móveis para sala, quarto, cozinha e escritório. Medidas e acabamentos na tela, compra na promissória.",
     // Busca e combinações de filtro não viram página no Google; ambiente e categoria sim.
     naoIndexar:

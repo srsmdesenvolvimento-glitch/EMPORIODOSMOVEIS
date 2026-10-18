@@ -19,8 +19,8 @@ export default function Promissoria() {
     .filter(Boolean);
 
   useSeo({
-    titulo: `Móveis na promissória${cidade}`,
-    descricao: `Compre móveis na promissória${cidade}, sem cartão de crédito: parcelamento direto com a loja, cadastro simples e sujeito a análise. Veja como funciona.`,
+    titulo: `Móveis no Boleto e Promissória${cidade} — Crediário Próprio`,
+    descricao: `Compre móveis no boleto parcelado e na promissória própria sem cartão de crédito: parcelamento facilitado, aprovação ágil e condições exclusivas de fábrica. Veja como funciona.`,
     dadosEstruturados: [
       {
         "@context": "https://schema.org",
@@ -49,7 +49,7 @@ export default function Promissoria() {
             Sem cartão de crédito
           </span>
           <h1 className="titulo text-4xl sm:text-5xl">
-            Móveis na promissória{cidade}, direto com a loja
+            Móveis no boleto e na promissória{cidade}, com facilidade real
           </h1>
           <p className="max-w-xl text-lg leading-relaxed text-tinta-300">
             {config.promissoria_texto}
@@ -121,7 +121,7 @@ export default function Promissoria() {
             </p>
           )}
           <p className="text-xs text-texto-3">
-            Venda sujeita a análise de cadastro e aprovação da loja.
+            Venda no crediário próprio sujeita a análise de cadastro e aprovação ágil.
           </p>
         </div>
       </section>
@@ -152,7 +152,7 @@ export default function Promissoria() {
           <div className="mt-8 grid justify-items-start gap-3 rounded-3xl border border-borda bg-superficie p-6">
             <p className="titulo text-2xl text-texto">Ficou alguma dúvida?</p>
             <p className="text-sm text-texto-2">
-              Fale com a loja e receba as condições para o seu pedido.
+              Fale com nosso time de atendimento e receba as condições sob medida para o seu pedido.
             </p>
             <a
               href={linkZap}

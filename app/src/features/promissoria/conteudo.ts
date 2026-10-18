@@ -1,53 +1,50 @@
 /**
- * Textos fixos sobre a venda na promissória.
- *
- * Tudo aqui é deliberadamente genérico: entrada, número de parcelas, encargos
- * e documentos são da política da loja e ficam no campo "Condições" do painel.
- * Não prometa neste arquivo nada que dependa dessas regras — publicidade de
- * crédito responde pelo que afirma.
+ * Textos institucionais sobre o crediário próprio: venda na promissória e boleto parcelado.
+ * Posicionamento de grande e-commerce de móveis com crédito facilitado e sem burocracia de cartão.
  */
 
 export const PASSOS_PROMISSORIA = [
   {
-    titulo: "Escolha os móveis",
-    texto: "Navegue pelo catálogo e monte a sua lista, com o acabamento de cada peça.",
+    titulo: "Escolha seus móveis online",
+    texto: "Explore mais de 300 modelos com fotos de alta definição, medidas exatas e fichas técnicas no catálogo.",
   },
   {
-    titulo: "Fale com a loja",
-    texto: "Envie a lista pelo WhatsApp. A equipe apresenta as condições e faz o seu cadastro.",
+    titulo: "Aprovação ágil sem cartão",
+    texto: "Envie sua lista de interesse. Nossa equipe analisa seu cadastro para parcelamento no boleto ou na promissória sem travar seu limite.",
   },
   {
-    titulo: "Assine e receba",
-    texto: "Com o cadastro aprovado, você assina a promissória e combina a entrega.",
+    titulo: "Entrega estruturada e segura",
+    texto: "Com o cadastro aprovado e o parcelamento definido, enviamos seus móveis embalados de fábrica com total segurança até a sua casa.",
   },
 ];
 
 export const MENSAGEM_PROMISSORIA =
-  "Olá! Vim pelo site e quero comprar na promissória. Quais são as condições?";
+  "Olá! Vim pelo site do Empório dos Móveis e quero comprar no boleto / promissória. Como funciona a aprovação?";
 
 export const PERGUNTAS_PROMISSORIA = [
   {
     pergunta: "Preciso de cartão de crédito para comprar?",
     resposta:
-      "Não. Na promissória o parcelamento é feito direto com a loja, sem passar por cartão.",
+      "Não. Com nosso crediário próprio você parcela suas compras no boleto ou na nota promissória sem precisar de cartão e sem travar o seu limite bancário.",
   },
   {
-    pergunta: "Como sei o valor das parcelas?",
+    pergunta: "Posso parcelar no boleto ou na promissória?",
     resposta:
-      "Você recebe a condição completa no atendimento: entrada, número de parcelas, valor de cada uma e eventuais encargos. Tudo é apresentado antes de você assinar.",
+      "Sim. Disponibilizamos modalidades de parcelamento direto (boleto bancário e promissória) com parcelas fixas e transparentes combinadas antes da conclusão do pedido.",
   },
   {
-    pergunta: "Quais documentos preciso apresentar?",
+    pergunta: "Como sei o valor e a quantidade das parcelas?",
     resposta:
-      "Em geral, documento com foto, CPF e comprovante de endereço. A equipe confirma a lista no atendimento.",
+      "Você recebe a simulação completa com total clareza no atendimento: opções de entrada, número de parcelas, datas de vencimento e valores fixos.",
   },
   {
-    pergunta: "A aprovação é garantida?",
-    resposta: "Não. O cadastro passa por uma análise da loja antes do fechamento do pedido.",
-  },
-  {
-    pergunta: "Posso incluir vários móveis no mesmo pedido?",
+    pergunta: "Quais documentos preciso apresentar para análise?",
     resposta:
-      "Sim. Monte a lista aqui no site e envie de uma vez: a loja avalia o pedido inteiro.",
+      "Documento oficial com foto (RG ou CNH), CPF e comprovante de endereço recente. A análise é rápida e realizada de forma digital.",
+  },
+  {
+    pergunta: "Posso mobiliar a casa inteira em um único pedido?",
+    resposta:
+      "Com certeza. Você pode adicionar quantos itens desejar (sala, quarto, cozinha, etc.) à sua lista no site e enviar tudo de uma vez para aprovação global do pedido.",
   },
 ];

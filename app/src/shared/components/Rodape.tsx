@@ -1,8 +1,8 @@
-import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import { useCategorias } from "@/features/catalogo/api";
-import { IconeFacebook, IconeInstagram } from "@/shared/components/IconesSociais";
+import { IconeFacebook, IconeInstagram, IconeWhatsApp } from "@/shared/components/IconesSociais";
 import { linkWhatsApp, NOME_DA_MARCA, useConfigSite } from "@/shared/lib/site";
 
 export function Rodape() {
@@ -30,7 +30,7 @@ export function Rodape() {
           </Link>
           <p className="max-w-xs text-sm leading-relaxed text-tinta-400">
             {config.sobre_texto ||
-              "Móveis para a casa inteira: sala, quarto, cozinha e escritório. Atendimento próximo e condição negociada peça a peça."}
+              "Grande e-commerce especializado em mobiliário de alto padrão. Catálogo selecionado direto de fábrica com parcelamento facilitado no boleto bancário e promissória própria."}
           </p>
           {config.instagram ? (
             <a
@@ -79,7 +79,7 @@ export function Rodape() {
 
         <nav aria-labelledby="rodape-loja" className="grid content-start gap-2">
           <h2 id="rodape-loja" className="text-sm font-semibold text-tinta-0">
-            A loja
+            Institucional
           </h2>
           <Link to="/sobre" className="text-sm text-tinta-400 transition-colors hover:text-marca-500">
             Quem somos
@@ -113,7 +113,7 @@ export function Rodape() {
               rel="noreferrer noopener"
               className="flex min-h-11 items-center gap-2 text-sm text-tinta-400 transition-colors hover:text-marca-500"
             >
-              <MessageCircle aria-hidden className="size-4" />
+              <IconeWhatsApp className="size-4 text-zap" />
               WhatsApp {config.whatsapp}
             </a>
           ) : null}

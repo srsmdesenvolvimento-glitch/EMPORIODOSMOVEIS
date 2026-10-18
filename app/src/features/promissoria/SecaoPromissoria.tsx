@@ -1,6 +1,7 @@
-import { ArrowRight, FileSignature, MessageCircle } from "lucide-react";
+import { ArrowRight, FileSignature } from "lucide-react";
 import { Link } from "react-router-dom";
 
+import { IconeWhatsApp } from "@/shared/components/IconesSociais";
 import { classesBotao } from "@/shared/components/ui";
 import { linkWhatsApp, useConfigSite } from "@/shared/lib/site";
 
@@ -39,7 +40,7 @@ export function SecaoPromissoria() {
                 rel="noreferrer noopener"
                 className={classesBotao({ aparencia: "marca", tamanho: "lg" })}
               >
-                <MessageCircle aria-hidden className="size-5" />
+                <IconeWhatsApp className="size-5 text-tinta-950" />
                 Quero comprar na promissória
               </a>
             ) : null}

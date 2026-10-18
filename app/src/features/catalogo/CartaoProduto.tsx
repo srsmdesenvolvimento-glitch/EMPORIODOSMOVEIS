@@ -178,11 +178,14 @@ export const CartaoProduto = memo(function CartaoProduto({
         ) : null}
       </div>
 
-      <div className="pointer-events-none mt-auto grid gap-1 px-3 pb-3 pt-1.5">
-        <div className="flex items-center justify-between">
+      <div className="pointer-events-none mt-auto grid gap-0.5 px-3 pb-3 pt-1.5">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-2 gap-y-0.5">
           <p className="text-xs font-bold text-texto sm:text-sm">Preço sob consulta</p>
-          <span className="text-[0.65rem] font-semibold text-sucesso">Pronta entrega</span>
+          <span className="text-[0.65rem] font-semibold text-sucesso whitespace-nowrap">Pronta entrega</span>
         </div>
+        <p className="text-[0.68rem] font-medium text-marca-900 line-clamp-1">
+          Boleto ou promissória sem cartão
+        </p>
       </div>
 
       {/* Camada do tamanho exato da foto (quadrada): os botões ficam nos cantos

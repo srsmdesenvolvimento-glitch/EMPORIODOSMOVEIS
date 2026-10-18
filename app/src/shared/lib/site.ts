@@ -22,13 +22,13 @@ export const CONFIG_PADRAO: ConfigSite = {
   facebook: "",
   mapa_url: "",
   chamada_home: "Móveis para a casa inteira, com montagem e entrega.",
-  sobre_texto: "",
+  sobre_texto: "Grande empresa de e-commerce especializada em mobiliário de alto padrão, combinando alta qualidade de fabricação com facilidade real de pagamento no boleto parcelado e promissória própria.",
   promissoria_ativa: true,
-  promissoria_titulo: "Compre na promissória",
+  promissoria_titulo: "Facilidade no Boleto e Promissória Própria",
   promissoria_texto:
-    "Parcele direto com a loja, sem cartão de crédito. Cadastro simples, sujeito a análise.",
+    "Compre seus móveis no crediário próprio: parcelamento facilitado no boleto bancário ou na nota promissória sem precisar de cartão e sem travar seu limite bancário. Cadastro simplificado e aprovação ágil.",
   promissoria_condicoes: "",
-  faixa_topo: "Compre na promissória, sem cartão de crédito",
+  faixa_topo: "Facilidade de Pagamento: Compre no Boleto Parcelado ou Promissória sem Cartão de Crédito",
 };
 
 const CAMPOS_COM_PADRAO = new Set(["promissoria_titulo", "promissoria_texto"]);

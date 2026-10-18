@@ -418,7 +418,7 @@ export default function Produto() {
             <ul className="grid gap-2 border-t border-borda pt-4 text-sm text-texto-2">
               <li className="flex items-start gap-2">
                 <ShieldCheck aria-hidden className="mt-0.5 size-4 shrink-0 text-sucesso" />
-                Atendimento direto com a loja, do pedido à entrega
+                Atendimento especializado e consultoria dedicada, do pedido à entrega
               </li>
               <li className="flex items-start gap-2">
                 <BadgeCheck aria-hidden className="mt-0.5 size-4 shrink-0 text-sucesso" />
@@ -569,7 +569,7 @@ export default function Produto() {
             })}
           >
             <MessageCircle aria-hidden className="size-4.5" />
-            Quero na Promissória
+            Quero no Boleto / Promissória
           </a>
         ) : null}
       </div>
@@ -624,7 +624,7 @@ function seoDoProduto(produto: ProdutoCompleto): DadosSeo {
   const descricao = [
     `${produto.nome}${medidas ? ` (${medidas})` : ""}.`,
     acabamentos.length > 1 ? `${acabamentos.length} acabamentos.` : null,
-    "Compre na promissória ou consulte a sua condição direto com a loja.",
+    "Compre na promissória ou no boleto parcelado sem cartão de crédito com condições exclusivas de fábrica.",
   ]
     .filter(Boolean)
     .join(" ");
